@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "./Contexts/DataContext";
 import { Menu, X } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { NavLink,useNavigate } from "react-router-dom";
 
 const MainHeader = () => {
   const [showSignup, setShowSignup] = useState(true);
@@ -26,13 +26,14 @@ const MainHeader = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const NavItem = ({ href, children }) => (
-    <a
-      href={href}
+  const NavItem = ({ to, children }) => (
+    <NavLink
+      to={to}
       className="text-white hover:text-blue-200 py-2 px-4 block lg:inline-block"
+      activeClassName="text-blue-200" // This will apply the active class if the link is active
     >
       {children}
-    </a>
+    </NavLink>
   );
   return (
     <div>
@@ -45,10 +46,10 @@ const MainHeader = () => {
             CareerRoadAI
           </h1>
           <nav className="hidden lg:block">
-            <NavItem href="/course/topic">Courses</NavItem>
-            <NavItem href="/About-us">About</NavItem>
-            <NavItem href="/roadmap">Roadmap</NavItem>
-            <NavItem href="/profile">Dashboard</NavItem>
+             <NavItem to="/course/topic">Courses</NavItem>
+            <NavItem to="/about-us">About</NavItem>
+            <NavItem to="/roadmap">Roadmap</NavItem>
+            <NavItem to="/profile">Dashboard</NavItem>
             {showSignup && (
               <button
                 className="bg-white text-blue-600 px-4 py-2 rounded hover:bg-blue-100 transition duration-300"
@@ -68,10 +69,10 @@ const MainHeader = () => {
       {isMenuOpen && (
         <div className="lg:hidden bg-blue-500 py-2">
           <nav className="container mx-auto flex flex-col">
-            <NavItem href="/course/topic">Courses</NavItem>
-            <NavItem href="/About-us">About</NavItem>
-            <NavItem href="/roadmap">Roadmap</NavItem>
-            <NavItem href="/profile">Dashboard</NavItem>
+            <NavItem to="/course/topic">Courses</NavItem>
+            <NavItem to="/about-us">About</NavItem>
+            <NavItem to="/roadmap">Roadmap</NavItem>
+            <NavItem to="/profile">Dashboard</NavItem>
             {showSignup && (
               <button
                 className="bg-white text-blue-600 px-4 py-2 m-2 rounded hover:bg-blue-100 transition duration-300"
