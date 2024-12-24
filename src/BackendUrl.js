@@ -1,1 +1,1 @@
-export const backendUrl = "http://localhost:5000/auth";
+export const backendUrl = `${process.env.REACT_APP_BACKEND_URL}/auth`;
