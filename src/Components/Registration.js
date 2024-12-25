@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import SignInwithGoogle from "./SignInwithGoogle";
 import axios from "axios";
 import { backendUrl } from "../BackendUrl";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate } from "react-router-dom";
 
 const Registration = () => {
   const [name, setName] = useState("");
@@ -116,9 +116,9 @@ const Registration = () => {
         </form>
         <p style={{ textAlign: "center" }}>
           Already an User ?
-          <a style={{ color: "blue" }} href="/login">
+           <Link style={{ color: "blue" }} to="/login">
             Login Here
-          </a>
+          </Link>
         </p>
         <div className="mt-4">
           <SignInwithGoogle />
