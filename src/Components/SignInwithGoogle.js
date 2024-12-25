@@ -5,14 +5,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { backendUrl } from "../BackendUrl";
 import { toast } from "react-toastify";
-import LoadSpinner from "./LoadSpinner";
 
-const SignInwithGoogle = () => {
-  const [loading, setLoading] = useState(false);
+const SignInwithGoogle = ({ setLoading, setText }) => {
   const navigate = useNavigate();
 
   async function googleLogin() {
     setLoading(true);
+    setText("Logging you in via google");
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
@@ -31,12 +30,9 @@ const SignInwithGoogle = () => {
     }
     finally {
       setLoading(false);
+      setText("");
     }
   }
-   if (loading) {
-    return <LoadSpinner text="Please wait while we log you in" />;
-  }
-
   async function createBackendUser(name, email, firebaseUID) {
     try {
       const response = await axios.post(`${backendUrl}/createUser`, {
