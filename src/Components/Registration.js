@@ -14,11 +14,13 @@ const Registration = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [text, setText] = useState("");
   const navigate = useNavigate();
 
   const handleRegistration = async (e) => {
     e.preventDefault();
      setLoading(true);
+    setText("Please wait while we create your account");
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
@@ -71,10 +73,11 @@ const Registration = () => {
       });
     }finally {
       setLoading(false);
+      setText("");
     }
   };
   if (loading) {
-    return <LoadSpinner text="Please wait while we create your account" />;
+    return <LoadSpinner text={text} />;
   }
 
   return (
@@ -129,7 +132,7 @@ const Registration = () => {
           </Link>
         </p>
         <div className="mt-4">
-          <SignInwithGoogle />
+          <SignInwithGoogle setLoading={setLoading} setText={setText} />
         </div>
       </div>
       <ToastContainer />
