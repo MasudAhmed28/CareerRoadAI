@@ -108,9 +108,9 @@ const Login = () => {
         </form>
         <p style={{ textAlign: "center" }}>
           Not an User ?
-          <a style={{ color: "blue" }} href="/registration">
+           <Link style={{ color: "blue" }} to="/registration">
             Register Here
-          </a>
+         </Link>
         </p>
         <div className="mt-4">
           <SignInwithGoogle />
