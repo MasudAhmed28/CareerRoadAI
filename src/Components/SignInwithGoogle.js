@@ -33,26 +33,18 @@ const SignInwithGoogle = ({ setLoading, setText }) => {
       setText("");
     }
   }
-  async function createBackendUser(name, email, firebaseUID) {
+async function createBackendUser(name, email, firebaseUID) {
     try {
       const response = await axios.post(`${backendUrl}/createUser`, {
         name,
         email,
         firebaseUID,
       });
-      if (response.status === 200 || response.status === 201) {
+      if (response.status === 200) {
         console.log("User successfully created in backend.");
-      } else {
-        console.error("Error creating MongoDB user:", response.data);
-        toast.error("Failed to save user to backend.", {
-          position: "bottom-center",
-        });
       }
     } catch (error) {
       console.error("Error during backend user creation:", error);
-      toast.error("Could not connect to the server.", {
-        position: "bottom-center",
-      });
     }
   }
 
