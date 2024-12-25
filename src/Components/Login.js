@@ -12,6 +12,7 @@ const Login = () => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
+  const [text, setText] = useState("");
 
   const navigate = useNavigate();
 
@@ -27,6 +28,7 @@ const Login = () => {
     e.preventDefault();
 
     setLoading(true);
+    setText("Please wait while we Logging you in");
     await signInWithEmailAndPassword(auth, formdata.email, formdata.password)
       .then((userCredential) => {
         toast.success("User logged in successfully", {
@@ -66,10 +68,11 @@ const Login = () => {
       })
       .finally(() => {
         setLoading(false);
+        setText("");        
       });
   };
   if (loading) {
-    return <LoadSpinner text="Logging you in" />;
+    return <LoadSpinner text={text} />;
   }
 
   return (
@@ -113,7 +116,7 @@ const Login = () => {
          </Link>
         </p>
         <div className="mt-4">
-          <SignInwithGoogle />
+         <SignInwithGoogle setLoading={setLoading} setText={setText} />
         </div>
       </div>
     </div>
