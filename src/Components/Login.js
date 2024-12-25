@@ -33,7 +33,7 @@ const Login = () => {
           position: "top-center",
         });
         console.log(userCredential.user);
-        setTimeout(() => navigate("/"), 1000);
+        navigate("/");
       })
       .catch((error) => {
         let errorMessage = "An error occurred. Please try again.";
