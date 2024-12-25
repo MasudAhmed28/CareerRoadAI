@@ -37,6 +37,8 @@ const ContactPage = () => {
           setCustomMessage("Message Sent ✔");
           setFormData({ name: "", email: "", message: "" });
           toast.success("Message sent successfully!");
+        } else if (response.status === 204) {
+          toast.error("Case already exist. Try again.");
         } else {
           setCustomMessage("Error Occurred");
           toast.error("Failed to send the message. Try again.");
