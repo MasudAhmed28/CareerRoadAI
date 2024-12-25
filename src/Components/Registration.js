@@ -7,15 +7,18 @@ import SignInwithGoogle from "./SignInwithGoogle";
 import axios from "axios";
 import { backendUrl } from "../BackendUrl";
 import {Link, useNavigate } from "react-router-dom";
+import LoadSpinner from "./LoadSpinner";
 
 const Registration = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleRegistration = async (e) => {
     e.preventDefault();
+     setLoading(true);
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
@@ -66,8 +69,13 @@ const Registration = () => {
         position: "top-center",
         autoClose: 5000,
       });
+    }finally {
+      setLoading(false);
     }
   };
+  if (loading) {
+    return <LoadSpinner text="Please wait while we create your account" />;
+  }
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
