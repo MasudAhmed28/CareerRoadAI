@@ -11,6 +11,7 @@ const Course = () => {
   const [courses, setCourses] = useState([]);
   const { loading, roadmapData } = useContext(DataContext);
   const [topic, setTopic] = useState("");
+  const [loading, setLoading] = useState(false);
   const { topicId } = useParams();
 
   useEffect(() => {
@@ -26,6 +27,7 @@ const Course = () => {
   }, [roadmapData, topicId]);
 
   const fetchCoursesOnline = async (topic) => {
+    setLoading(true);
     if (!topic) return;
     const isAICourse = topic.toLowerCase() === "ai";
     const cacheKey = isAICourse ? "AICourses" : "Courses";
@@ -65,6 +67,8 @@ const Course = () => {
     } catch (error) {
       console.log(error);
       toast.error(error.Message, { position: "top-center" });
+    }finally {
+      setLoading(false);
     }
   };
   if (loading) {
