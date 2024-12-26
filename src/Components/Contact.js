@@ -3,7 +3,7 @@ import MainFooter from "./MainFooter";
 import MainHeader from "./MainHeader";
 import axios from "axios";
 import { backendUrl } from "../BackendUrl";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 const ContactPage = () => {
   const [formdata, setFormData] = useState({
@@ -62,7 +62,6 @@ const ContactPage = () => {
   return (
     <>
       <MainHeader />
-      <ToastContainer />
       <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-xl mx-auto bg-white shadow-lg rounded-xl overflow-hidden">
           <div className="p-8">
