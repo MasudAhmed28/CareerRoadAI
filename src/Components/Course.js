@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 
 const Course = () => {
   const [courses, setCourses] = useState([]);
-  const { loading, roadmapData } = useContext(DataContext);
+  const {roadmapData } = useContext(DataContext);
   const [topic, setTopic] = useState("");
   const [loading, setLoading] = useState(false);
   const { topicId } = useParams();
