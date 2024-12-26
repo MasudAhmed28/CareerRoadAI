@@ -21,7 +21,7 @@ const SignInwithGoogle = ({ setLoading, setText }) => {
           result.user.email,
           result.user.uid
         );
-        toast.success("Logged in successfully", { position: "top-center" });
+        //toast.success("Logged in successfully", { position: "top-center" });
         navigate("/");
       }
     } catch (error) {
