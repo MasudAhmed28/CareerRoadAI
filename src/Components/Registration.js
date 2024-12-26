@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SignInwithGoogle from "./SignInwithGoogle";
 import axios from "axios";
@@ -135,7 +135,6 @@ const Registration = () => {
           <SignInwithGoogle setLoading={setLoading} setText={setText} />
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };
