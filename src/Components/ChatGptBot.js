@@ -210,7 +210,7 @@ If you require more information, ask a specific follow-up question to gather rel
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+    <div className="z-10 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
       <div
         className="bg-white rounded-lg shadow-xl w-full max-w-md flex flex-col"
         style={{ height: "80vh" }}
