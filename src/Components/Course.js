@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import MainHeader from "./MainHeader";
 import MainFooter from "./MainFooter";
 import LoadSpinner from "./LoadSpinner";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Course = () => {
   const [courses, setCourses] = useState([]);
@@ -13,6 +13,7 @@ const Course = () => {
   const [topic, setTopic] = useState("");
   const { topicId } = useParams();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const normalizedTopicId = topicId?.toLowerCase();
@@ -89,11 +90,26 @@ const Course = () => {
     <>
       <MainHeader />
       <div className="p-5 pt-20 pb-30">
-        <h2 className="text-center mb-8 font-semibold text-3xl">
-          {topic
-            ? `Courses Related to ${topic}`
-            : "Please create a Roadmap first to get personalised course suggestions"}
+        <h2 className="text-center mb-8 font-semibold text-xl flex flex-col items-center">
+          {topic ? (
+            `Courses Related to ${topic}`
+          ) : (
+            <>
+              <p>
+                Please create a Roadmap first to get personalised course
+                suggestions
+              </p>
+
+              <button
+                onClick={() => navigate("/course/ai")}
+                className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 mt-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition duration-300 shadow-lg"
+              >
+                Browse Courses
+              </button>
+            </>
+          )}
         </h2>
+
         {courses?.length > 0 ? (
           <div className="flex flex-wrap gap-5 justify-center">
             {courses.map((item, index) => (
