@@ -29,8 +29,8 @@ const MainHeader = () => {
   const NavItem = ({ to, children }) => (
     <NavLink
       to={to}
-      className="text-gray-700 hover:text-indigo-600 transition py-2 px-4 block lg:inline-block"
-      activeClassName="text-blue-200" // This will apply the active class if the link is active
+      className="text-gray-700 hover:text-indigo-600 transition py-2 px-4 block lg:inline-block font-medium"
+      activeClassName="text-blue-200"
     >
       {children}
     </NavLink>
@@ -52,7 +52,7 @@ const MainHeader = () => {
             <NavItem to="/profile">Dashboard</NavItem>
             {showSignup && (
               <button
-                className="bg-white text-blue-600 px-4 py-2 rounded hover:bg-blue-100 transition duration-300"
+                className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded hover:bg-blue-100 transition duration-300"
                 onClick={handleSignup}
               >
                 Sign Up
@@ -67,7 +67,7 @@ const MainHeader = () => {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="lg:hidden bg-blue-500 py-2">
+        <div className="lg:hidden bg-gradient-to-b from-indigo-50 via-purple-50 py-2">
           <nav className="container mx-auto flex flex-col">
             <NavItem to="/course/topic">Courses</NavItem>
             <NavItem to="/about-us">About</NavItem>
