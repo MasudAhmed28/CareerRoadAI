@@ -1,40 +1,48 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import React,{ useState } from "react";
+import React from "react";
 import { auth } from "./firebase";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { backendUrl } from "../BackendUrl";
 import { toast } from "react-toastify";
 
-const SignInwithGoogle = ({ setLoading, setText }) => {
+const SignInWithGoogle = ({ setLoading, setLoadingMessage, setTip }) => {
   const navigate = useNavigate();
+
+  function mockDelay(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
 
   async function googleLogin() {
     setLoading(true);
-    setText("Logging you in via google");
+    setLoadingMessage("Connecting to Google...");
+
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
+
       if (result.user) {
+        setLoadingMessage("Setting up your profile...");
         await createBackendUser(
           result.user.displayName,
           result.user.email,
           result.user.uid
         );
-        //toast.success("Logged in successfully", { position: "top-center" });
+        toast.success("Logged in successfully", { position: "top-center" });
         navigate("/");
       }
     } catch (error) {
       console.error("Google login error:", error);
-      handleAuthError(error); // Custom error handler
-    }
-    finally {
+      handleAuthError(error);
+    } finally {
       setLoading(false);
-      setText("");
     }
   }
-async function createBackendUser(name, email, firebaseUID) {
+
+  async function createBackendUser(name, email, firebaseUID) {
+    setLoadingMessage("Creating your account...");
     try {
+      await mockDelay(27000);
       const response = await axios.post(`${backendUrl}/createUser`, {
         name,
         email,
@@ -42,9 +50,11 @@ async function createBackendUser(name, email, firebaseUID) {
       });
       if (response.status === 200) {
         console.log("User successfully created in backend.");
+        setLoadingMessage("Almost there...");
       }
     } catch (error) {
       console.error("Error during backend user creation:", error);
+      throw error;
     }
   }
 
@@ -84,4 +94,4 @@ async function createBackendUser(name, email, firebaseUID) {
   );
 };
 
-export default SignInwithGoogle;
+export default SignInWithGoogle;
