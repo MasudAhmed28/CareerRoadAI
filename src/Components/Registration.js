@@ -44,6 +44,16 @@ const Registration = () => {
     setLoading(true);
     setLoadingMessage("Please wait while we create your account");
     setCurrentTip(getRandomTip());
+
+    if (!name || !email || !password) {
+      toast.error("All fields are required", {
+        position: "top-center",
+        autoClose: 5000,
+      });
+      setLoading(false);
+      return;
+    }
+
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
@@ -56,7 +66,9 @@ const Registration = () => {
       });
 
       if (response.status === 201) {
-        toast.success("Registered successfully", {
+        const successMessage =
+          response.data.message || "Registered successfully";
+        toast.success(successMessage, {
           position: "top-center",
           autoClose: 5000,
         });
@@ -64,13 +76,8 @@ const Registration = () => {
         setName("");
         setEmail("");
         setPassword("");
-      } else if (response.status === 201) {
-        navigate("/");
-        setName("");
-        setEmail("");
-        setPassword("");
       }
-    } catch (error) {
+    }catch (error) {
       console.log(error.message);
       let errorMessage = "";
 
