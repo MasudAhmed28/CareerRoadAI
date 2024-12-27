@@ -244,21 +244,29 @@ If you require more information, ask a specific follow-up question to gather rel
                 </ChatContainer>
               </MainContainer>
             ) : (
-              <h1 className="text-lg font-semibold text-center">
-                Roadmap already exist
-              </h1>
+              <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-4 flex flex-col justify-center items-center">
+                <h1 className="text-lg font-semibold text-center">
+                  Roadmap already exist
+                </h1>
+                <button
+                  className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:from-indigo-700 hover:to-purple-700 transform transition hover:-translate-y-0.5 shadow-lg hover:shadow-indigo-200"
+                  onClick={() => navigate("/roadmap")}
+                >
+                  Click Here
+                </button>
+              </div>
             )
           ) : (
-            <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-4">
+            <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-4 flex flex-col justify-center items-center">
               <h2 className="text-lg font-semibold text-center">
-                Please register/Login to use this feature
-                <button
-                  className="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition duration-300 shadow-lg"
-                  onClick={() => navigate("/login")}
-                >
-                  Login
-                </button>
+                Please Login to use this AI feature
               </h2>
+              <button
+                className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:from-indigo-700 hover:to-purple-700 transform transition hover:-translate-y-0.5 shadow-lg hover:shadow-indigo-200"
+                onClick={() => navigate("/login")}
+              >
+                Login
+              </button>
             </div>
           )}
         </div>
