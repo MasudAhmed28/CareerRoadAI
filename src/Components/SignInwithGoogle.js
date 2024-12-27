@@ -16,7 +16,7 @@ const SignInWithGoogle = ({ setLoading, setLoadingMessage, setTip }) => {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       if (result.user) {
-        setLoadingMessage("Setting up your profile...");
+        setLoadingMessage("Connecting to Google......");
         await createBackendUser(
           result.user.displayName,
           result.user.email,
@@ -34,7 +34,7 @@ const SignInWithGoogle = ({ setLoading, setLoadingMessage, setTip }) => {
   }
 
   async function createBackendUser(name, email, firebaseUID) {
-    setLoadingMessage("Creating your account...");
+    setLoadingMessage("Hang tight, setting things up......");
     try {
       const response = await axios.post(`${backendUrl}/createUser`, {
         name,
@@ -43,11 +43,13 @@ const SignInWithGoogle = ({ setLoading, setLoadingMessage, setTip }) => {
       });
       if (response.status === 200) {
         console.log("User successfully created in backend.");
-        setLoadingMessage("Almost there...");
+       setLoadingMessage("Almost there, preparing your dashboard...");
       }
     } catch (error) {
       console.error("Error during backend user creation:", error);
       throw error;
+    }finally {
+      setLoadingMessage("Finalizing your login experience......");
     }
   }
 
