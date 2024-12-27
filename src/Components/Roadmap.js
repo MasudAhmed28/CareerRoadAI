@@ -41,7 +41,7 @@ const Roadmap = () => {
         <div className="flex flex-col justify-center items-center h-64 space-y-4">
           <p>No roadmap data available.</p>
           <button
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition duration-300 shadow-lg"
+            className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition duration-300 shadow-lg"
             onClick={toggleChat}
           >
             Get Started <ArrowRight className="inline ml-2" />
@@ -150,7 +150,7 @@ const Roadmap = () => {
     <>
       <MainHeader />
       <div className="max-w-4xl mx-auto p-6 space-y-6">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">
+        <h1 className="text-3xl text-center font-bold text-gray-800 mb-8">
           Learning Roadmap
         </h1>
 
