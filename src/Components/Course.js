@@ -9,39 +9,45 @@ import { useParams } from "react-router-dom";
 
 const Course = () => {
   const [courses, setCourses] = useState([]);
-  const {roadmapData } = useContext(DataContext);
+  const { roadmapData } = useContext(DataContext);
   const [topic, setTopic] = useState("");
-  const [loading, setLoading] = useState(false);
   const { topicId } = useParams();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (roadmapData?.name) {
-      const selectedTopic =
-        topicId.toLowerCase() === "ai" ? "AI" : roadmapData.name;
-      setTopic(selectedTopic);
+    const normalizedTopicId = topicId?.toLowerCase();
 
-      fetchCoursesOnline(selectedTopic);
+    if (normalizedTopicId === "topic") {
+      if (roadmapData?.name) {
+        setTopic(roadmapData.name);
+        fetchCoursesOnline(roadmapData.name);
+      } else {
+        setTopic("");
+        setCourses([]);
+      }
+    } else if (normalizedTopicId === "ai") {
+      setTopic("AI");
+      fetchCoursesOnline("AI");
     } else {
       setTopic("");
+      setCourses([]);
     }
   }, [roadmapData, topicId]);
 
   const fetchCoursesOnline = async (topic) => {
-    setLoading(true);
     if (!topic) return;
+    setLoading(true);
+
     const isAICourse = topic.toLowerCase() === "ai";
     const cacheKey = isAICourse ? "AICourses" : "Courses";
     const cacheExpiryKey = `${cacheKey}-expiry`;
 
     try {
       const cachedData = localStorage.getItem(cacheKey);
-
       const cacheExpiration = localStorage.getItem(cacheExpiryKey);
 
       if (cachedData && Date.now() < cacheExpiration) {
-        const parsedData = JSON.parse(cachedData);
-        setCourses(parsedData);
-
+        setCourses(JSON.parse(cachedData));
         return;
       }
 
@@ -61,16 +67,20 @@ const Course = () => {
         link: item.link,
         snippet: item.snippet,
       }));
+
       localStorage.setItem(cacheKey, JSON.stringify(result));
       localStorage.setItem(cacheExpiryKey, Date.now() + 3600 * 1000);
       setCourses(result);
     } catch (error) {
-      console.log(error);
-      toast.error(error.Message, { position: "top-center" });
-    }finally {
+      console.error(error);
+      toast.error(error.message || "Failed to fetch courses", {
+        position: "top-center",
+      });
+    } finally {
       setLoading(false);
     }
   };
+
   if (loading) {
     return <LoadSpinner text={"Loading Course"} />;
   }
@@ -78,14 +88,15 @@ const Course = () => {
   return (
     <>
       <MainHeader />
-
       <div className="p-5 pt-20 pb-30">
         <h2 className="text-center mb-8 font-semibold text-3xl">
-          {topic ? `Courses Related to ${topic}` : "No topic/Courses found"}
+          {topic
+            ? `Courses Related to ${topic}`
+            : "Please create a Roadmap first to get personalised course suggestions"}
         </h2>
         {courses?.length > 0 ? (
           <div className="flex flex-wrap gap-5 justify-center">
-            {courses?.map((item, index) => (
+            {courses.map((item, index) => (
               <div
                 key={index}
                 className="bg-white border border-gray-200 rounded-lg shadow-md p-4 max-w-xs w-full text-center transition-transform transform hover:scale-105 hover:shadow-lg"
