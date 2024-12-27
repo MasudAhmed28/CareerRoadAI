@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SignInwithGoogle from "./SignInwithGoogle";
-import LoadSpinner from "./LoadSpinner";
+import { Loader2 } from "lucide-react";
+import { getRandomTip } from "./Util";
 
 const Login = () => {
   const [formdata, setFormData] = useState({
@@ -12,9 +13,29 @@ const Login = () => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
-  const [text, setText] = useState("");
-
+  const [loadingMessage, setLoadingMessage] = useState("");
+  const [currentTip, setCurrentTip] = useState("");
+  const [loadStartTime, setLoadStartTime] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loading && !loadStartTime) {
+      setLoadStartTime(Date.now());
+    }
+    if (!loading && loadStartTime) {
+      setLoadStartTime(null);
+    }
+  }, [loading, loadStartTime]);
+
+  useEffect(() => {
+    if (loading && loadStartTime) {
+      const tipInterval = setInterval(() => {
+        setCurrentTip(getRandomTip());
+      }, 4000);
+
+      return () => clearInterval(tipInterval);
+    }
+  }, [loading, loadStartTime]);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -24,11 +45,13 @@ const Login = () => {
     }));
   };
 
-   const handleFormSubmit = async (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     setLoading(true);
-    setText("Please wait while we Logging you in");
+    setLoadingMessage("Please wait while we log you in");
+    setCurrentTip(getRandomTip());
+
     await signInWithEmailAndPassword(auth, formdata.email, formdata.password)
       .then((userCredential) => {
         toast.success("User logged in successfully", {
@@ -68,11 +91,35 @@ const Login = () => {
       })
       .finally(() => {
         setLoading(false);
-        setText("");        
       });
   };
   if (loading) {
-    return <LoadSpinner text={text} />;
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <div className="bg-white p-8 rounded-lg shadow-md max-w-md w-full">
+          <div className="flex flex-col items-center">
+            <Loader2 className="h-8 w-8 text-blue-500 animate-spin mb-4" />
+            <p className="text-gray-600 text-center animate-pulse mb-4">
+              {loadingMessage}
+            </p>
+
+            {loadStartTime && Date.now() - loadStartTime > 3000 && (
+              <div className="bg-blue-50 p-4 rounded-lg w-full mt-4">
+                <p className="text-sm text-blue-700 text-center transition-all duration-500">
+                  {currentTip}
+                </p>
+              </div>
+            )}
+
+            {loadStartTime && Date.now() - loadStartTime > 8000 && (
+              <p className="text-xs text-gray-500 mt-4 text-center">
+                This is taking longer than usual. Please wait...
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -109,14 +156,18 @@ const Login = () => {
             Login
           </button>
         </form>
-        <p style={{ textAlign: "center" }}>
-          Not an User ?
-           <Link style={{ color: "blue" }} to="/registration">
+        <p className="text-center mt-4">
+          Not an User?{" "}
+          <a className="text-blue-500 hover:underline" href="/registration">
             Register Here
-         </Link>
+          </a>
         </p>
         <div className="mt-4">
-         <SignInwithGoogle setLoading={setLoading} setText={setText} />
+          <SignInwithGoogle
+            setLoading={setLoading}
+            setLoadingMessage={setLoadingMessage}
+            setTip={setCurrentTip}
+          />
         </div>
       </div>
     </div>
