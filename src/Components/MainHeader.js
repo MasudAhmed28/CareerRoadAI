@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "./Contexts/DataContext";
 import { Menu, X } from "lucide-react";
-import { NavLink,useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const MainHeader = () => {
   const [showSignup, setShowSignup] = useState(true);
@@ -29,7 +29,7 @@ const MainHeader = () => {
   const NavItem = ({ to, children }) => (
     <NavLink
       to={to}
-      className="text-white hover:text-blue-200 py-2 px-4 block lg:inline-block"
+      className="text-gray-700 hover:text-indigo-600 transition py-2 px-4 block lg:inline-block"
       activeClassName="text-blue-200" // This will apply the active class if the link is active
     >
       {children}
@@ -37,16 +37,16 @@ const MainHeader = () => {
   );
   return (
     <div>
-      <header className="bg-blue-600 text-white p-4 sticky top-0 z-10 shadow-md">
+      <header className="bg-gradient-to-b from-indigo-50 via-purple-50 to-pink-50 p-4 sticky top-0 z-10 shadow-md">
         <div className="container mx-auto flex justify-between items-center">
           <h1
-            className="text-2xl font-bold cursor-pointer"
+            className="text-2xl font-bold cursor-pointer text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 text-xl font-bold"
             onClick={() => navigate("/")}
           >
             CareerRoadAI
           </h1>
           <nav className="hidden lg:block">
-             <NavItem to="/course/topic">Courses</NavItem>
+            <NavItem to="/course/topic">Courses</NavItem>
             <NavItem to="/about-us">About</NavItem>
             <NavItem to="/roadmap">Roadmap</NavItem>
             <NavItem to="/profile">Dashboard</NavItem>
