@@ -20,14 +20,14 @@ const HomePage = () => {
       <MainHeader />
       <main className="container mx-auto mt-8 px-4">
         <section className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4 text-blue-800">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-transparent bg-clip-text">
             Master Any Skills for Free with AI
           </h2>
-          <p className="text-xl mb-6 text-gray-600">
+          <p className="text-xl text-gray-700 mb-8">
             Let CareerRoadAI create a curated Roadmap for you.
           </p>
           <button
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition duration-300 shadow-lg"
+            className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:from-indigo-700 hover:to-purple-700 transform transition hover:-translate-y-0.5 shadow-lg hover:shadow-indigo-200"
             onClick={toggleChat}
           >
             Get Started <ArrowRight className="inline ml-2" />
@@ -57,9 +57,9 @@ const HomePage = () => {
           ].map((feature, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition duration-300"
+              className="bg-white/60 backdrop-blur-sm rounded-xl shadow-lg p-6 hover:shadow-xl transition border border-purple-100 group hover:-translate-y-1"
             >
-              <h3 className="text-xl font-semibold mb-2 flex items-center text-blue-700">
+              <h3 className="text-xl font-semibold mb-2 flex items-center text-indigo-600">
                 <feature.icon className="mr-2 text-blue-600" size={24} />
                 {feature.title}
               </h3>
@@ -69,12 +69,12 @@ const HomePage = () => {
         </section>
 
         <section className="text-center mb-12 bg-blue-100 py-12 rounded-lg shadow-inner">
-          <h3 className="text-2xl font-bold mb-4 text-blue-800">
+          <h3 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-6">
             Ready to dive into AI?
           </h3>
           <button
             onClick={() => navigate("/course/ai")}
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition duration-300 shadow-lg"
+            className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:from-indigo-700 hover:to-purple-700 transform transition hover:-translate-y-0.5 shadow-lg hover:shadow-indigo-200"
           >
             Browse Courses
           </button>
