@@ -8,19 +8,13 @@ import { toast } from "react-toastify";
 
 const SignInWithGoogle = ({ setLoading, setLoadingMessage, setTip }) => {
   const navigate = useNavigate();
-
-  function mockDelay(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
+  
   async function googleLogin() {
     setLoading(true);
     setLoadingMessage("Connecting to Google...");
-
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
-
       if (result.user) {
         setLoadingMessage("Setting up your profile...");
         await createBackendUser(
@@ -42,7 +36,6 @@ const SignInWithGoogle = ({ setLoading, setLoadingMessage, setTip }) => {
   async function createBackendUser(name, email, firebaseUID) {
     setLoadingMessage("Creating your account...");
     try {
-      await mockDelay(27000);
       const response = await axios.post(`${backendUrl}/createUser`, {
         name,
         email,
