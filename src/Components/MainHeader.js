@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "./Contexts/DataContext";
 import { Menu, X } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
+import logo from "./Images/logo.png";
 
 const MainHeader = () => {
   const [showSignup, setShowSignup] = useState(true);
@@ -40,9 +41,15 @@ const MainHeader = () => {
       <header className="bg-gradient-to-b from-indigo-50 via-purple-50 to-pink-50 p-4 sticky top-0 z-10 shadow-md">
         <div className="container mx-auto flex justify-between items-center">
           <h1
-            className="text-2xl font-bold cursor-pointer text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 text-xl font-bold"
+            className="text-2xl font-bold cursor-pointer text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 text-xl font-bold flex items-center"
             onClick={() => navigate("/")}
           >
+             <img
+              onClick={() => navigate("/")}
+              src={logo}
+              alt="logo"
+              className="w-12  mr-2" // Adjust size of the image
+            />
             CareerRoadAI
           </h1>
           <nav className="hidden lg:block">
