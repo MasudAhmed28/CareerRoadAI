@@ -18,6 +18,7 @@ import Course from "./Components/Course";
 import About from "./Components/About";
 import PrivacyPolicy from "./Components/PrivacyPolicy";
 import ProtectedRoute from "./Components/Contexts/ProtectedRoute";
+import QuestionDetail from "./Components/QuestionDetail";
 
 export default function App() {
   return (
@@ -53,6 +54,7 @@ export default function App() {
           <Route path="/contactCareerRoadAITeam" element={<ContactPage />} />
           <Route path="/About-us" element={<About />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/community" element={<QuestionDetail />} />
         </Routes>
         <ToastContainer autoClose={1000} />
       </BrowserRouter>
