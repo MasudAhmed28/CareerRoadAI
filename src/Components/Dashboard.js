@@ -37,7 +37,7 @@ const Dashboard = () => {
                 <h2 className="text-2xl font-bold text-gray-800">
                   {user?.displayName || "User"}
                 </h2>
-                <p className="text-gray-600">{user?.email}</p>
+                 <p className="text-gray-600 text-[0.7rem]">{user?.email}</p>
               </div>
             </div>
           </div>
