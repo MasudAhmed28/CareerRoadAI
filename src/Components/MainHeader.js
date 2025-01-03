@@ -7,7 +7,7 @@ import logo from "./Images/logo.png";
 const MainHeader = () => {
   const [showSignup, setShowSignup] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user } = useContext(DataContext);
+  const { user, logout } = useContext(DataContext);
   const navigate = useNavigate();
 
   const handleSignup = () => {
@@ -44,7 +44,7 @@ const MainHeader = () => {
             className="text-2xl font-bold cursor-pointer text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 text-xl font-bold flex items-center"
             onClick={() => navigate("/")}
           >
-             <img
+            <img
               onClick={() => navigate("/")}
               src={logo}
               alt="logo"
@@ -53,6 +53,7 @@ const MainHeader = () => {
             CareerRoadAI
           </h1>
           <nav className="hidden lg:block">
+            <NavItem to="/community">Community</NavItem>
             <NavItem to="/course/topic">Courses</NavItem>
             <NavItem to="/about-us">About</NavItem>
             <NavItem to="/roadmap">Roadmap</NavItem>
@@ -76,16 +77,24 @@ const MainHeader = () => {
       {isMenuOpen && (
         <div className="lg:hidden bg-gradient-to-b from-indigo-50 via-purple-50 py-2">
           <nav className="container mx-auto flex flex-col">
+            <NavItem to="/community">Community</NavItem>
             <NavItem to="/course/topic">Courses</NavItem>
             <NavItem to="/about-us">About</NavItem>
             <NavItem to="/roadmap">Roadmap</NavItem>
             <NavItem to="/profile">Dashboard</NavItem>
-            {showSignup && (
+            {showSignup ? (
               <button
                 className="bg-white text-blue-600 px-4 py-2 m-2 rounded hover:bg-blue-100 transition duration-300"
                 onClick={handleSignup}
               >
                 Sign Up
+              </button>
+            ) : (
+              <button
+                className="bg-white text-blue-600 px-4 py-2 m-2 rounded hover:bg-blue-100 transition duration-300"
+                onClick={() => logout()}
+              >
+                Log out
               </button>
             )}
           </nav>
