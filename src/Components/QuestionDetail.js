@@ -418,7 +418,7 @@ const QuestionDetail = () => {
                         <div className="flex items-center justify-between">
                           <p className="font-semibold">{reply.userInfo.name}</p>
                           <p className="text-sm text-gray-500">
-                            {new Date(reply.timeStamp).toLocaleDateString()}
+                            {timeAgo(reply.timestamp)}
                           </p>
                         </div>
                         <p className="mt-2 text-gray-700">{reply.body}</p>
