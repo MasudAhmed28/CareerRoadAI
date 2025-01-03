@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import SignInwithGoogle from "./SignInwithGoogle";
 import { Loader2 } from "lucide-react";
 import { getRandomTip } from "./Util";
+import logo from "./Images/logo.png";
+import ForgotPassword from "./ForgotPassword";
 
 const Login = () => {
   const [formdata, setFormData] = useState({
@@ -16,8 +18,10 @@ const Login = () => {
   const [loadingMessage, setLoadingMessage] = useState("");
   const [currentTip, setCurrentTip] = useState("");
   const [loadStartTime, setLoadStartTime] = useState(null);
+  const [forgetPass, setForgetPass] = useState(false);
   const navigate = useNavigate();
 
+  // ... [keeping all your existing useEffect and handler functions]
   useEffect(() => {
     if (loading && !loadStartTime) {
       setLoadStartTime(Date.now());
@@ -51,7 +55,6 @@ const Login = () => {
     setLoading(true);
     setLoadingMessage("Please wait while we log you in");
     setCurrentTip(getRandomTip());
-
     await signInWithEmailAndPassword(auth, formdata.email, formdata.password)
       .then((userCredential) => {
         toast.success("User logged in successfully", {
@@ -93,6 +96,11 @@ const Login = () => {
         setLoading(false);
       });
   };
+  const handleForgetPassword = async () => {
+    console.log(forgetPass);
+    setForgetPass(true);
+  };
+
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -123,53 +131,163 @@ const Login = () => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
-        <form onSubmit={handleFormSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Email</label>
-            <input
-              type="email"
-              placeholder="Email"
-              name="email"
-              value={formdata.email}
-              onChange={handleFormChange}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    <div className="min-h-screen flex">
+      {/* Left Section - Logo and Welcome Text */}
+      <div className="hidden lg:flex lg:w-1/2 bg-blue-50 flex-col justify-center px-12">
+        <div className="mb-8">
+          <div className="w-40 h-14 rounded flex items-center justify-center">
+            <img
+              onClick={() => navigate("/")}
+              src={logo}
+              alt="logo"
+              className="cursor-pointer"
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formdata.password}
-              onChange={handleFormChange}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+        </div>
+
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">Welcome Back</h1>
+        <div className="space-y-6">
+          <p className="text-lg text-gray-600">
+            Experience seamless collaboration,enhanced productivity,personalized
+            growth and streamlined learning with our AI-powered app.
+          </p>
+
+          <div className="space-y-4">
+            <div className="flex items-center space-x-4">
+              <div className="w-8 h-0.5 bg-blue-500"></div>
+              <span className="text-gray-700">
+                Build your roadmap based on your unique answers
+              </span>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="w-8 h-0.5 bg-blue-500"></div>
+              <span className="text-gray-700">
+                Access videos and read essential topics, tailored by AI
+              </span>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="w-8 h-0.5 bg-blue-500"></div>
+              <span className="text-gray-700">
+                Track your progress with AI-driven insights
+              </span>
+            </div>
           </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
-          >
-            Login
-          </button>
-        </form>
-        <p className="text-center mt-4">
-          Not an User?{" "}
-          <a className="text-blue-500 hover:underline" href="/registration">
-            Register Here
-          </a>
-        </p>
-        <div className="mt-4">
-          <SignInwithGoogle
-            setLoading={setLoading}
-            setLoadingMessage={setLoadingMessage}
-            setTip={setCurrentTip}
-          />
+
+          <div className="mt-12 flex space-x-3">
+            <div className="w-12 h-1.5 bg-blue-500 rounded-full"></div>
+            <div className="w-3 h-1.5 bg-blue-300 rounded-full"></div>
+            <div className="w-3 h-1.5 bg-blue-200 rounded-full"></div>
+          </div>
         </div>
       </div>
+
+      {/* Right Section - Login Form */}
+      {forgetPass ? (
+        <ForgotPassword />
+      ) : (
+        <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
+          <div className="w-full max-w-md">
+            {/* Mobile Logo */}
+            <div className="flex justify-center mb-8 lg:hidden">
+              <img
+                onClick={() => navigate("/")}
+                src={logo}
+                alt="logo"
+                className="w-32 cursor-pointer"
+              />
+            </div>
+
+            <h2 className="text-3xl font-bold text-gray-900 mb-8">Sign In</h2>
+
+            <form onSubmit={handleFormSubmit} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  name="email"
+                  value={formdata.email}
+                  onChange={handleFormChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  value={formdata.password}
+                  onChange={handleFormChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                />
+              </div>
+
+              <div className="flex items-center justify-between text-sm">
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id="remember"
+                    className="h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300 rounded"
+                  />
+                  <label htmlFor="remember" className="ml-2 text-gray-600">
+                    Remember me
+                  </label>
+                </div>
+                <div
+                  className="text-blue-500 hover:text-blue-600 cursor-pointer"
+                  onClick={() => handleForgetPassword()}
+                >
+                  Forgot password?
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition duration-300 font-medium"
+              >
+                Sign In
+              </button>
+            </form>
+
+            <div className="mt-8">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300"></div>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-white text-gray-500">
+                    Or continue with
+                  </span>
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <SignInwithGoogle
+                  setLoading={setLoading}
+                  setLoadingMessage={setLoadingMessage}
+                  setTip={setCurrentTip}
+                />
+              </div>
+            </div>
+
+            <p className="text-center mt-8 text-sm text-gray-600">
+              Not an User?{" "}
+              <a
+                className="text-blue-500 hover:text-blue-600 font-medium"
+                href="/registration"
+              >
+                Register Here
+              </a>
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
