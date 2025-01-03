@@ -55,9 +55,12 @@ const HomePage = () => {
                 "Join a community of learners and AI enthusiasts to grow together.",
             },
           ].map((feature, index) => (
-            <div
+           <div
+              {...(feature.title === "Community Support"
+                ? { onClick: () => navigate("/community") }
+                : {})}
               key={index}
-              className="bg-white/60 backdrop-blur-sm rounded-xl shadow-lg p-6 hover:shadow-xl transition border border-purple-100 group hover:-translate-y-1"
+              className="bg-white/60 backdrop-blur-sm rounded-xl cursor-pointer shadow-lg p-6 hover:shadow-xl transition border border-purple-100 group hover:-translate-y-1"
             >
               <h3 className="text-xl font-semibold mb-2 flex items-center text-indigo-600">
                 <feature.icon className="mr-2 text-blue-600" size={24} />
