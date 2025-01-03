@@ -9,6 +9,7 @@ import { backendUrl } from "../BackendUrl";
 import { Link, useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { getRandomTip } from "./Util";
+import logo from "./Images/logo.png";
 
 const Registration = () => {
   const [name, setName] = useState("");
@@ -33,7 +34,7 @@ const Registration = () => {
     if (loading && loadStartTime) {
       const tipInterval = setInterval(() => {
         setCurrentTip(getRandomTip());
-      }, 4000); // Change tip every 4 seconds
+      }, 4000);
 
       return () => clearInterval(tipInterval);
     }
@@ -72,12 +73,12 @@ const Registration = () => {
           position: "top-center",
           autoClose: 5000,
         });
-        navigate("/");
+        navigate("/login");
         setName("");
         setEmail("");
         setPassword("");
       }
-    }catch (error) {
+    } catch (error) {
       console.log(error.message);
       let errorMessage = "";
 
@@ -136,62 +137,152 @@ const Registration = () => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-        <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
-        <form onSubmit={handleRegistration}>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Name</label>
-            <input
-              type="text"
-              name="name"
-              placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    <div className="min-h-screen flex">
+      {/* Left Section - Logo and Welcome Text */}
+      <div className="hidden lg:flex lg:w-1/2 bg-blue-50 flex-col justify-center px-12">
+        <div className="mb-8">
+          <div className="w-40 h-14 rounded flex items-center justify-center">
+            <img
+              onClick={() => navigate("/")}
+              src={logo}
+              alt="logo"
+              className="cursor-pointer"
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Email</label>
-            <input
-              type="email"
-              placeholder="Email"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        </div>
+
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">Welcome Back</h1>
+        <div className="space-y-6">
+          <p className="text-lg text-gray-600">
+            Experience seamless collaboration,enhanced productivity,personalized
+            growth and streamlined learning with our AI-powered app.
+          </p>
+
+          <div className="space-y-4">
+            <div className="flex items-center space-x-4">
+              <div className="w-8 h-0.5 bg-blue-500"></div>
+              <span className="text-gray-700">
+                Build your roadmap based on your unique answers
+              </span>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="w-8 h-0.5 bg-blue-500"></div>
+              <span className="text-gray-700">
+                Access videos and read essential topics, tailored by AI
+              </span>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="w-8 h-0.5 bg-blue-500"></div>
+              <span className="text-gray-700">
+                Track your progress with AI-driven insights
+              </span>
+            </div>
+          </div>
+
+          <div className="mt-12 flex space-x-3">
+            <div className="w-12 h-1.5 bg-blue-500 rounded-full"></div>
+            <div className="w-3 h-1.5 bg-blue-300 rounded-full"></div>
+            <div className="w-3 h-1.5 bg-blue-200 rounded-full"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Right Section - Registration Form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
+        <div className="w-full max-w-md">
+          {/* Mobile Logo */}
+          <div className="flex justify-center mb-8 lg:hidden">
+            <img
+              onClick={() => navigate("/")}
+              src={logo}
+              alt="logo"
+              className="w-32 cursor-pointer"
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Password</label>
-            <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">Register</h2>
+
+          <form onSubmit={handleRegistration} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                placeholder="Enter your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition duration-300 font-medium"
+            >
+              Register
+            </button>
+          </form>
+
+          <div className="mt-8">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">
+                  Or continue with
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <SignInwithGoogle
+                setLoading={setLoading}
+                setLoadingMessage={setLoadingMessage}
+                setTip={setCurrentTip}
+              />
+            </div>
           </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
-          >
-            Register
-          </button>
-        </form>
-        <p style={{ textAlign: "center" }}>
-          Already an User ?
-          <Link style={{ color: "blue" }} to="/login">
-            Login Here
-          </Link>
-        </p>
-        <div className="mt-4">
-          <SignInwithGoogle
-            setLoading={setLoading}
-            setLoadingMessage={setLoadingMessage}
-            setTip={setCurrentTip}
-          />
+
+          <p className="text-center mt-8 text-sm text-gray-600">
+            Already a User?{" "}
+            <Link
+              className="text-blue-500 hover:text-blue-600 font-medium"
+              to="/login"
+            >
+              Login Here
+            </Link>
+          </p>
         </div>
       </div>
     </div>
